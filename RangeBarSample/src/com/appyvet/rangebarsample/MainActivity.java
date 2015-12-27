@@ -16,6 +16,10 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class MainActivity extends Activity implements
         ColorPickerDialog.OnColorSelectedListener {
 
@@ -32,10 +36,109 @@ public class MainActivity extends Activity implements
 
     private int mTickColor;
 
-    // Initializes the RangeBar in the application
-    private RangeBar rangebar;
-
     private int mSelectorColor;
+
+    // Initializes the RangeBar in the application
+    @Bind(R.id.rangebar1) RangeBar rangebar;
+    @OnClick(R.id.enableRange)
+    void onEnableRangeClick(View view) {
+        rangebar.setRangeBarEnabled(!rangebar.isRangeBar());
+    }
+    @OnClick(R.id.disable)
+    void onDisableRangeClick(View view) {
+        rangebar.setEnabled(!rangebar.isEnabled());
+    }
+
+    @Bind(R.id.barColor) TextView barColorText;
+    @OnClick(R.id.barColor)
+    void onBarColorClick(View view) {
+        initColorPicker(Component.BAR_COLOR, mBarColor, mBarColor);
+    }
+
+    @Bind(R.id.connectingLineColor) TextView connectingLineColorText;
+    @OnClick(R.id.connectingLineColor)
+    void onConnectingLineColorClick(View view) {
+        initColorPicker(Component.CONNECTING_LINE_COLOR, mConnectingLineColor,
+                mConnectingLineColor);
+    }
+    @Bind(R.id.pinColor) TextView pinColorText;
+    @OnClick(R.id.pinColor)
+    void onPinColorClick(View view) {
+        initColorPicker(Component.PIN_COLOR, mPinColor, mPinColor);
+    }
+
+    @Bind(R.id.textColor) TextView textColorText;
+    @OnClick(R.id.textColor)
+    void onTextColorClick(View view) {
+        initColorPicker(Component.TEXT_COLOR, mTextColor, mTextColor);
+    }
+
+    @Bind(R.id.tickColor) TextView tickColorText;
+    @OnClick(R.id.tickColor)
+    void onTickColorTextClick(View view) {
+        initColorPicker(Component.TICK_COLOR, mTickColor, mTickColor);
+    }
+
+    @Bind(R.id.selectorColor) TextView selectorColorText;
+    @OnClick(R.id.selectorColor)
+    void onSelectorColorTextClick(View view) {
+        initColorPicker(Component.SELECTOR_COLOR, mSelectorColor, mSelectorColor);
+    }
+
+    @Bind(R.id.leftIndexValue) EditText leftIndexValue;
+    @Bind(R.id.rightIndexValue) EditText rightIndexValue;
+    @Bind(R.id.tickStart) TextView tickStart;
+    @Bind(R.id.tickStartSeek) SeekBar tickStartSeek;
+
+    @OnClick(R.id.setIndex)
+    void onIndexClick(View view) {
+        // Gets the String values of all the texts
+        String leftIndex = leftIndexValue.getText().toString();
+        String rightIndex = rightIndexValue.getText().toString();
+
+        // Catches any IllegalArgumentExceptions; if fails, should throw
+        // a dialog warning the user
+        try {
+            if (!leftIndex.isEmpty() && !rightIndex.isEmpty()) {
+                int leftIntIndex = Integer.parseInt(leftIndex);
+                int rightIntIndex = Integer.parseInt(rightIndex);
+                rangebar.setRangePinsByIndices(leftIntIndex, rightIntIndex);
+            }
+        } catch (IllegalArgumentException e) {
+        }
+    }
+    @OnClick(R.id.setValue)
+    void onSetValueClick(View view) {
+        // Gets the String values of all the texts
+        String leftValue = leftIndexValue.getText().toString();
+        String rightValue = rightIndexValue.getText().toString();
+
+        // Catches any IllegalArgumentExceptions; if fails, should throw
+        // a dialog warning the user
+        try {
+            if (!leftValue.isEmpty() && !rightValue.isEmpty()) {
+                float leftIntIndex = Float.parseFloat(leftValue);
+                float rightIntIndex = Float.parseFloat(rightValue);
+                rangebar.setRangePinsByValue(leftIntIndex, rightIntIndex);
+            }
+        } catch (IllegalArgumentException e) {
+        }
+    }
+
+    @Bind(R.id.tickEnd) TextView tickEnd;
+    @Bind(R.id.tickEndSeek) SeekBar tickEndSeek;
+
+    @Bind(R.id.tickInterval) TextView tickInterval;
+    @Bind(R.id.tickIntervalSeek) SeekBar tickIntervalSeek;
+
+    @Bind(R.id.barWeight) TextView barWeight;
+    @Bind(R.id.barWeightSeek) SeekBar barWeightSeek;
+
+    @Bind(R.id.connectingLineWeight) TextView connectingLineWeight;
+    @Bind(R.id.connectingLineWeightSeek) SeekBar connectingLineWeightSeek;
+
+    @Bind(R.id.thumbRadius) TextView thumbRadius;
+    @Bind(R.id.thumbRadiusSeek) SeekBar thumbRadiusSeek;
 
     // Saves the state upon rotating the screen/restarting the activity
     @Override
@@ -53,22 +156,24 @@ public class MainActivity extends Activity implements
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
+        ButterKnife.bind(this);
+
         // Sets fonts for all
 //        Typeface font = Typeface.createFromAsset(getAssets(), "Roboto-Thin.ttf");
 ////        ViewGroup root = (ViewGroup) findViewById(R.id.mylayout);
 ////        setFont(root, font);
 
         // Gets the buttons references for the buttons
-        final TextView barColor = (TextView) findViewById(R.id.barColor);
-        final TextView connectingLineColor = (TextView) findViewById(R.id.connectingLineColor);
-        final TextView pinColor = (TextView) findViewById(R.id.pinColor);
-        final TextView pinTextColor = (TextView) findViewById(R.id.textColor);
-        final TextView tickColor = (TextView) findViewById(R.id.tickColor);
-        final TextView selectorColor = (TextView) findViewById(R.id.selectorColor);
-        final TextView indexButton = (TextView) findViewById(R.id.setIndex);
-        final TextView valueButton = (TextView) findViewById(R.id.setValue);
-        final TextView rangeButton = (TextView) findViewById(R.id.enableRange);
-        final TextView disabledButton = (TextView) findViewById(R.id.disable);
+//        final TextView barColor = (TextView) findViewById(R.id.barColor);
+//        final TextView connectingLineColor = (TextView) findViewById(R.id.connectingLineColor);
+//        final TextView pinColor = (TextView) findViewById(R.id.pinColor);
+//        final TextView pinTextColor = (TextView) findViewById(R.id.textColor);
+//        final TextView tickColor = (TextView) findViewById(R.id.tickColor);
+//        final TextView selectorColor = (TextView) findViewById(R.id.selectorColor);
+//        final TextView indexButton = (TextView) findViewById(R.id.setIndex);
+//        final TextView valueButton = (TextView) findViewById(R.id.setValue);
+//        final TextView rangeButton = (TextView) findViewById(R.id.enableRange);
+//        final TextView disabledButton = (TextView) findViewById(R.id.disable);
 
         //Sets the buttons to bold.
 //        barColor.setTypeface(font, Typeface.BOLD);
@@ -76,26 +181,26 @@ public class MainActivity extends Activity implements
 //        pinColor.setTypeface(font, Typeface.BOLD);
 
         // Gets the RangeBar
-        rangebar = (RangeBar) findViewById(R.id.rangebar1);
+//        rangebar = (RangeBar) findViewById(R.id.rangebar1);
 
-        rangeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rangebar.setRangeBarEnabled(!rangebar.isRangeBar());
-            }
-        });
-        disabledButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rangebar.setEnabled(!rangebar.isEnabled());
-            }
-        });
+//        rangeButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                rangebar.setRangeBarEnabled(!rangebar.isRangeBar());
+//            }
+//        });
+//        disabledButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                rangebar.setEnabled(!rangebar.isEnabled());
+//            }
+//        });
 
         // Setting Index Values -------------------------------
 
         // Gets the index value TextViews
-        final EditText leftIndexValue = (EditText) findViewById(R.id.leftIndexValue);
-        final EditText rightIndexValue = (EditText) findViewById(R.id.rightIndexValue);
+//        final EditText leftIndexValue = (EditText) findViewById(R.id.leftIndexValue);
+//        final EditText rightIndexValue = (EditText) findViewById(R.id.rightIndexValue);
 
         // Sets the display values of the indices
         rangebar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
@@ -110,52 +215,52 @@ public class MainActivity extends Activity implements
         });
 
         // Sets the indices themselves upon input from the user
-        indexButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                // Gets the String values of all the texts
-                String leftIndex = leftIndexValue.getText().toString();
-                String rightIndex = rightIndexValue.getText().toString();
-
-                // Catches any IllegalArgumentExceptions; if fails, should throw
-                // a dialog warning the user
-                try {
-                    if (!leftIndex.isEmpty() && !rightIndex.isEmpty()) {
-                        int leftIntIndex = Integer.parseInt(leftIndex);
-                        int rightIntIndex = Integer.parseInt(rightIndex);
-                        rangebar.setRangePinsByIndices(leftIntIndex, rightIntIndex);
-                    }
-                } catch (IllegalArgumentException e) {
-                }
-            }
-        });
+//        indexButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//
+//                // Gets the String values of all the texts
+//                String leftIndex = leftIndexValue.getText().toString();
+//                String rightIndex = rightIndexValue.getText().toString();
+//
+//                // Catches any IllegalArgumentExceptions; if fails, should throw
+//                // a dialog warning the user
+//                try {
+//                    if (!leftIndex.isEmpty() && !rightIndex.isEmpty()) {
+//                        int leftIntIndex = Integer.parseInt(leftIndex);
+//                        int rightIntIndex = Integer.parseInt(rightIndex);
+//                        rangebar.setRangePinsByIndices(leftIntIndex, rightIntIndex);
+//                    }
+//                } catch (IllegalArgumentException e) {
+//                }
+//            }
+//        });
 
         // Sets the indices by values based upon input from the user
-        valueButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                // Gets the String values of all the texts
-                String leftValue = leftIndexValue.getText().toString();
-                String rightValue = rightIndexValue.getText().toString();
-
-                // Catches any IllegalArgumentExceptions; if fails, should throw
-                // a dialog warning the user
-                try {
-                    if (!leftValue.isEmpty() && !rightValue.isEmpty()) {
-                        float leftIntIndex = Float.parseFloat(leftValue);
-                        float rightIntIndex = Float.parseFloat(rightValue);
-                        rangebar.setRangePinsByValue(leftIntIndex, rightIntIndex);
-                    }
-                } catch (IllegalArgumentException e) {
-                }
-            }
-        });
+//        valueButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//
+//                // Gets the String values of all the texts
+//                String leftValue = leftIndexValue.getText().toString();
+//                String rightValue = rightIndexValue.getText().toString();
+//
+//                // Catches any IllegalArgumentExceptions; if fails, should throw
+//                // a dialog warning the user
+//                try {
+//                    if (!leftValue.isEmpty() && !rightValue.isEmpty()) {
+//                        float leftIntIndex = Float.parseFloat(leftValue);
+//                        float rightIntIndex = Float.parseFloat(rightValue);
+//                        rangebar.setRangePinsByValue(leftIntIndex, rightIntIndex);
+//                    }
+//                } catch (IllegalArgumentException e) {
+//                }
+//            }
+//        });
 
         // Setting Number Attributes -------------------------------
 
         // Sets tickStart
-        final TextView tickStart = (TextView) findViewById(R.id.tickStart);
-        SeekBar tickStartSeek = (SeekBar) findViewById(R.id.tickStartSeek);
+//        final TextView tickStart = (TextView) findViewById(R.id.tickStart);
+//        SeekBar tickStartSeek = (SeekBar) findViewById(R.id.tickStartSeek);
         tickStartSeek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar tickCountSeek, int progress, boolean fromUser) {
@@ -176,8 +281,8 @@ public class MainActivity extends Activity implements
         });
 
         // Sets tickEnd
-        final TextView tickEnd = (TextView) findViewById(R.id.tickEnd);
-        SeekBar tickEndSeek = (SeekBar) findViewById(R.id.tickEndSeek);
+//        final TextView tickEnd = (TextView) findViewById(R.id.tickEnd);
+//        SeekBar tickEndSeek = (SeekBar) findViewById(R.id.tickEndSeek);
         tickEndSeek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar tickCountSeek, int progress, boolean fromUser) {
@@ -198,8 +303,8 @@ public class MainActivity extends Activity implements
         });
 
         // Sets tickInterval
-        final TextView tickInterval = (TextView) findViewById(R.id.tickInterval);
-        SeekBar tickIntervalSeek = (SeekBar) findViewById(R.id.tickIntervalSeek);
+//        final TextView tickInterval = (TextView) findViewById(R.id.tickInterval);
+//        SeekBar tickIntervalSeek = (SeekBar) findViewById(R.id.tickIntervalSeek);
         tickIntervalSeek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar tickCountSeek, int progress, boolean fromUser) {
@@ -220,8 +325,8 @@ public class MainActivity extends Activity implements
         });
 
         // Sets barWeight
-        final TextView barWeight = (TextView) findViewById(R.id.barWeight);
-        SeekBar barWeightSeek = (SeekBar) findViewById(R.id.barWeightSeek);
+//        final TextView barWeight = (TextView) findViewById(R.id.barWeight);
+//        SeekBar barWeightSeek = (SeekBar) findViewById(R.id.barWeightSeek);
         barWeightSeek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
             @Override
@@ -240,8 +345,8 @@ public class MainActivity extends Activity implements
         });
 
         // Sets connectingLineWeight
-        final TextView connectingLineWeight = (TextView) findViewById(R.id.connectingLineWeight);
-        SeekBar connectingLineWeightSeek = (SeekBar) findViewById(R.id.connectingLineWeightSeek);
+//        final TextView connectingLineWeight = (TextView) findViewById(R.id.connectingLineWeight);
+//        SeekBar connectingLineWeightSeek = (SeekBar) findViewById(R.id.connectingLineWeightSeek);
         connectingLineWeightSeek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar connectingLineWeightSeek, int progress,
@@ -260,8 +365,8 @@ public class MainActivity extends Activity implements
         });
 
         // Sets thumbRadius
-        final TextView thumbRadius = (TextView) findViewById(R.id.thumbRadius);
-        SeekBar thumbRadiusSeek = (SeekBar) findViewById(R.id.thumbRadiusSeek);
+//        final TextView thumbRadius = (TextView) findViewById(R.id.thumbRadius);
+//        SeekBar thumbRadiusSeek = (SeekBar) findViewById(R.id.thumbRadiusSeek);
         thumbRadiusSeek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar thumbRadiusSeek, int progress, boolean fromUser){
@@ -281,44 +386,44 @@ public class MainActivity extends Activity implements
         // Setting Color Attributes---------------------------------
 
         // Sets barColor
-        barColor.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                initColorPicker(Component.BAR_COLOR, mBarColor, mBarColor);
-            }
-        });
+//        barColorText.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                initColorPicker(Component.BAR_COLOR, mBarColor, mBarColor);
+//            }
+//        });
 
         // Sets connectingLineColor
-        connectingLineColor.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                initColorPicker(Component.CONNECTING_LINE_COLOR, mConnectingLineColor,
-                        mConnectingLineColor);
-            }
-        });
+//        connectingLineColor.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                initColorPicker(Component.CONNECTING_LINE_COLOR, mConnectingLineColor,
+//                        mConnectingLineColor);
+//            }
+//        });
 
         // Sets pinColor
-        pinColor.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                initColorPicker(Component.PIN_COLOR, mPinColor, mPinColor);
-            }
-        });
+//        pinColor.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                initColorPicker(Component.PIN_COLOR, mPinColor, mPinColor);
+//            }
+//        });
         // Sets pinTextColor
-        pinTextColor.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                initColorPicker(Component.TEXT_COLOR, mTextColor, mTextColor);
-            }
-        });
+//        pinTextColor.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                initColorPicker(Component.TEXT_COLOR, mTextColor, mTextColor);
+//            }
+//        });
         // Sets tickColor
-        tickColor.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                initColorPicker(Component.TICK_COLOR, mTickColor, mTickColor);
-            }
-        });
+//        tickColor.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                initColorPicker(Component.TICK_COLOR, mTickColor, mTickColor);
+//            }
+//        });
         // Sets selectorColor
-        selectorColor.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                initColorPicker(Component.SELECTOR_COLOR, mSelectorColor, mSelectorColor);
-            }
-        });
+//        selectorColor.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                initColorPicker(Component.SELECTOR_COLOR, mSelectorColor, mSelectorColor);
+//            }
+//        });
 
     }
 
@@ -328,7 +433,6 @@ public class MainActivity extends Activity implements
      * @param component Component specifying which input is being used
      * @param newColor  Integer specifying the new color to be selected.
      */
-
     @Override
     public void onColorSelected(int newColor, Component component) {
         Log.d("Color selected"," new color = "+newColor+ ",compoment = "+component);
@@ -338,14 +442,13 @@ public class MainActivity extends Activity implements
             case BAR_COLOR:
                 mBarColor = newColor;
                 rangebar.setBarColor(newColor);
-                final TextView barColorText = (TextView) findViewById(R.id.barColor);
                 barColorText.setText("barColor = " + hexColor);
                 barColorText.setTextColor(newColor);
                 break;
             case TEXT_COLOR:
                 mTextColor = newColor;
                 rangebar.setPinTextColor(newColor);
-                final TextView textColorText = (TextView) findViewById(R.id.textColor);
+//                final TextView textColorText = (TextView) findViewById(R.id.textColor);
                 textColorText.setText("textColor = " + hexColor);
                 textColorText.setTextColor(newColor);
                 break;
@@ -353,8 +456,6 @@ public class MainActivity extends Activity implements
             case CONNECTING_LINE_COLOR:
                 mConnectingLineColor = newColor;
                 rangebar.setConnectingLineColor(newColor);
-                final TextView connectingLineColorText = (TextView) findViewById(
-                        R.id.connectingLineColor);
                 connectingLineColorText.setText("connectingLineColor = " + hexColor);
                 connectingLineColorText.setTextColor(newColor);
                 break;
@@ -362,21 +463,21 @@ public class MainActivity extends Activity implements
             case PIN_COLOR:
                 mPinColor = newColor;
                 rangebar.setPinColor(newColor);
-                final TextView pinColorText = (TextView) findViewById(R.id.pinColor);
+//                final TextView pinColorText = (TextView) findViewById(R.id.pinColor);
                 pinColorText.setText("pinColor = " + hexColor);
                 pinColorText.setTextColor(newColor);
                 break;
             case TICK_COLOR:
                 mTickColor = newColor;
                 rangebar.setTickColor(newColor);
-                final TextView tickColorText = (TextView) findViewById(R.id.tickColor);
+//                final TextView tickColorText = (TextView) findViewById(R.id.tickColor);
                 tickColorText.setText("tickColor = " + hexColor);
                 tickColorText.setTextColor(newColor);
                 break;
             case SELECTOR_COLOR:
                 mSelectorColor = newColor;
                 rangebar.setSelectorColor(newColor);
-                final TextView selectorColorText = (TextView) findViewById(R.id.selectorColor);
+//                final TextView selectorColorText = (TextView) findViewById(R.id.selectorColor);
                 selectorColorText.setText("selectorColor = " + hexColor);
                 selectorColorText.setTextColor(newColor);
                 break;
