@@ -16,6 +16,7 @@
 
 package com.appyvet.rangebarsample;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import java.util.List;
@@ -26,22 +27,52 @@ import java.util.List;
 public interface MainContract {
 
     interface View {
+        void initColorPicker(Component component, int initialColor, int defaultColor);
 
-        void setProgressIndicator(boolean active);
+        void showUnknownComponentColor(int newColor, Component component);
 
+        void updateBarColor(int barColor);
+        void updateBarColorText(int newColor);
+
+        void updatePinTextColor(int newColor);
+        void updatePinTextColorText(int newColor);
+
+        void updateConnectingLineColor(int newColor);
+        void updateConnectingLineColorText(int newColor);
+
+        void updatePinColor(int newColor);
+        void updatePinColorText(int newColor);
+
+        void updateTickColor(int newColor);
+        void updateTickColorText(int newColor);
+
+        void updateSelectorColor(int newColor);
+        void updateSelectorColorText(int newColor);
+//        void setProgressIndicator(boolean active);
 //        void showVideos(List<MyVishotModel> notes);
-
-        void showAddVideo();
-
-        void showVideoDetailUi(String videoId);
+//        void showAddVideo();
+//        void showVideoDetailUi(String videoId);
     }
 
     interface UserActionsListener {
+        /// show color each picker
+        void chooseBarColor();
+        void chooseConnectingLineColor();
+        void choosePinColor();
+        void chooseTextColor();
+        void chooseTickColor();
+        void chooseSelectorColor();
 
-        void loadVideos(boolean forceUpdate);
+        /// update component's new color
+        void updateComponentColor(int newColor, Component component);
 
-        void addNewVideo();
+        // todo: should a presenter involve with the Bundle class?
+        /// save and restore state with bundle
+        void saveState(Bundle bundle);
+        void restoreState(Bundle bundle);
 
+//        void loadVideos(boolean forceUpdate);
+//        void addNewVideo();
 //        void openVideoDetails(@NonNull MyVishotModel requestedNote);
     }
 }
