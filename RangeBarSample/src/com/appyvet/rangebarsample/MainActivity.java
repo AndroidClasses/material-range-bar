@@ -163,44 +163,10 @@ public class MainActivity extends Activity implements
 ////        ViewGroup root = (ViewGroup) findViewById(R.id.mylayout);
 ////        setFont(root, font);
 
-        // Gets the buttons references for the buttons
-//        final TextView barColor = (TextView) findViewById(R.id.barColor);
-//        final TextView connectingLineColor = (TextView) findViewById(R.id.connectingLineColor);
-//        final TextView pinColor = (TextView) findViewById(R.id.pinColor);
-//        final TextView pinTextColor = (TextView) findViewById(R.id.textColor);
-//        final TextView tickColor = (TextView) findViewById(R.id.tickColor);
-//        final TextView selectorColor = (TextView) findViewById(R.id.selectorColor);
-//        final TextView indexButton = (TextView) findViewById(R.id.setIndex);
-//        final TextView valueButton = (TextView) findViewById(R.id.setValue);
-//        final TextView rangeButton = (TextView) findViewById(R.id.enableRange);
-//        final TextView disabledButton = (TextView) findViewById(R.id.disable);
-
         //Sets the buttons to bold.
 //        barColor.setTypeface(font, Typeface.BOLD);
 //        connectingLineColor.setTypeface(font, Typeface.BOLD);
 //        pinColor.setTypeface(font, Typeface.BOLD);
-
-        // Gets the RangeBar
-//        rangebar = (RangeBar) findViewById(R.id.rangebar1);
-
-//        rangeButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                rangebar.setRangeBarEnabled(!rangebar.isRangeBar());
-//            }
-//        });
-//        disabledButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                rangebar.setEnabled(!rangebar.isEnabled());
-//            }
-//        });
-
-        // Setting Index Values -------------------------------
-
-        // Gets the index value TextViews
-//        final EditText leftIndexValue = (EditText) findViewById(R.id.leftIndexValue);
-//        final EditText rightIndexValue = (EditText) findViewById(R.id.rightIndexValue);
 
         // Sets the display values of the indices
         rangebar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
@@ -214,53 +180,7 @@ public class MainActivity extends Activity implements
 
         });
 
-        // Sets the indices themselves upon input from the user
-//        indexButton.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//
-//                // Gets the String values of all the texts
-//                String leftIndex = leftIndexValue.getText().toString();
-//                String rightIndex = rightIndexValue.getText().toString();
-//
-//                // Catches any IllegalArgumentExceptions; if fails, should throw
-//                // a dialog warning the user
-//                try {
-//                    if (!leftIndex.isEmpty() && !rightIndex.isEmpty()) {
-//                        int leftIntIndex = Integer.parseInt(leftIndex);
-//                        int rightIntIndex = Integer.parseInt(rightIndex);
-//                        rangebar.setRangePinsByIndices(leftIntIndex, rightIntIndex);
-//                    }
-//                } catch (IllegalArgumentException e) {
-//                }
-//            }
-//        });
-
-        // Sets the indices by values based upon input from the user
-//        valueButton.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//
-//                // Gets the String values of all the texts
-//                String leftValue = leftIndexValue.getText().toString();
-//                String rightValue = rightIndexValue.getText().toString();
-//
-//                // Catches any IllegalArgumentExceptions; if fails, should throw
-//                // a dialog warning the user
-//                try {
-//                    if (!leftValue.isEmpty() && !rightValue.isEmpty()) {
-//                        float leftIntIndex = Float.parseFloat(leftValue);
-//                        float rightIntIndex = Float.parseFloat(rightValue);
-//                        rangebar.setRangePinsByValue(leftIntIndex, rightIntIndex);
-//                    }
-//                } catch (IllegalArgumentException e) {
-//                }
-//            }
-//        });
-
-        // Setting Number Attributes -------------------------------
-
         // Sets tickStart
-//        final TextView tickStart = (TextView) findViewById(R.id.tickStart);
-//        SeekBar tickStartSeek = (SeekBar) findViewById(R.id.tickStartSeek);
         tickStartSeek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar tickCountSeek, int progress, boolean fromUser) {
@@ -281,8 +201,6 @@ public class MainActivity extends Activity implements
         });
 
         // Sets tickEnd
-//        final TextView tickEnd = (TextView) findViewById(R.id.tickEnd);
-//        SeekBar tickEndSeek = (SeekBar) findViewById(R.id.tickEndSeek);
         tickEndSeek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar tickCountSeek, int progress, boolean fromUser) {
@@ -303,8 +221,6 @@ public class MainActivity extends Activity implements
         });
 
         // Sets tickInterval
-//        final TextView tickInterval = (TextView) findViewById(R.id.tickInterval);
-//        SeekBar tickIntervalSeek = (SeekBar) findViewById(R.id.tickIntervalSeek);
         tickIntervalSeek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar tickCountSeek, int progress, boolean fromUser) {
@@ -325,8 +241,6 @@ public class MainActivity extends Activity implements
         });
 
         // Sets barWeight
-//        final TextView barWeight = (TextView) findViewById(R.id.barWeight);
-//        SeekBar barWeightSeek = (SeekBar) findViewById(R.id.barWeightSeek);
         barWeightSeek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
             @Override
@@ -345,8 +259,6 @@ public class MainActivity extends Activity implements
         });
 
         // Sets connectingLineWeight
-//        final TextView connectingLineWeight = (TextView) findViewById(R.id.connectingLineWeight);
-//        SeekBar connectingLineWeightSeek = (SeekBar) findViewById(R.id.connectingLineWeightSeek);
         connectingLineWeightSeek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar connectingLineWeightSeek, int progress,
@@ -365,8 +277,6 @@ public class MainActivity extends Activity implements
         });
 
         // Sets thumbRadius
-//        final TextView thumbRadius = (TextView) findViewById(R.id.thumbRadius);
-//        SeekBar thumbRadiusSeek = (SeekBar) findViewById(R.id.thumbRadiusSeek);
         thumbRadiusSeek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar thumbRadiusSeek, int progress, boolean fromUser){
@@ -382,49 +292,6 @@ public class MainActivity extends Activity implements
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
-
-        // Setting Color Attributes---------------------------------
-
-        // Sets barColor
-//        barColorText.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                initColorPicker(Component.BAR_COLOR, mBarColor, mBarColor);
-//            }
-//        });
-
-        // Sets connectingLineColor
-//        connectingLineColor.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                initColorPicker(Component.CONNECTING_LINE_COLOR, mConnectingLineColor,
-//                        mConnectingLineColor);
-//            }
-//        });
-
-        // Sets pinColor
-//        pinColor.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                initColorPicker(Component.PIN_COLOR, mPinColor, mPinColor);
-//            }
-//        });
-        // Sets pinTextColor
-//        pinTextColor.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                initColorPicker(Component.TEXT_COLOR, mTextColor, mTextColor);
-//            }
-//        });
-        // Sets tickColor
-//        tickColor.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                initColorPicker(Component.TICK_COLOR, mTickColor, mTickColor);
-//            }
-//        });
-        // Sets selectorColor
-//        selectorColor.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                initColorPicker(Component.SELECTOR_COLOR, mSelectorColor, mSelectorColor);
-//            }
-//        });
-
     }
 
     /**
